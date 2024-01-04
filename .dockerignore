@@ -1,0 +1,6 @@
+node_modules
+docker
+test
+database
+helm
+manifests

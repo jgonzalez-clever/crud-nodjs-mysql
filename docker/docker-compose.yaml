@@ -1,0 +1,27 @@
+version: "3.3"
+
+services:
+
+  mysql:
+    image: jgonzalezclever/crud-mysql:v0.0.1
+    volumes:
+      - /opt/mysql-data:/var/lib/mysql  
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    restart: always
+
+  app:
+    image: jgonzalezclever/crud-nodejs:v0.0.1
+    ports:
+      - 3000:3000
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_DB: crudnodejs
+      TITLE: clever
+    depends_on:
+      - mysql
+    command: ["./start.sh"]
+    restart: always
+
