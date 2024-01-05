@@ -1,0 +1,30 @@
+name: My Workflow
+
+on:
+    workflow_dispatch:
+    push:
+      branches:
+        - main
+  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Compose
+      uses: docker/compose-cli@v0.3.0
+
+    - name: Build and Run Docker Compose
+      run: |
+        cd docker
+        docker-compose build
+        docker-compose up -d
+
+    - name: ZAP Scan
+      uses: zaproxy/action-full-scan@v0.8.0
+      with:
+        target: 'http://127.0.0.1:3000/'
