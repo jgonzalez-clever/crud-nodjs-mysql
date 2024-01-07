@@ -10,7 +10,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    outputs:
+      output1: ${{ steps.scan.outputs.test }}
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -27,6 +28,7 @@ jobs:
         docker-compose up -d
 
     - name: ZAP Scan
+      id: scan
       uses: zaproxy/action-full-scan@v0.8.0
       with:
         target: 'http://127.0.0.1:3000/'
@@ -34,6 +36,6 @@ jobs:
     - name: Display ZAP Scan Results
       run: |
         echo "ZAP Scan Results:"
-        echo "Pass Count: ${{ steps.zap_scan.outputs.pass_count }}"
+        echo "Pass Count: ${{ steps.scan.outputs.test }}
         echo "Fail Count: ${{ steps.zap_scan.outputs.fail_count }}"
         echo "Warn Count: ${{ steps.zap_scan.outputs.warn_count }}"
