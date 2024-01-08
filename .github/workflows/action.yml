@@ -25,22 +25,17 @@ jobs:
         docker-compose build
         docker-compose up -d
 
+    - name: Zap-name
+      run: |
+        echo "ZAP_NAME=$(date +"%Y-%m-%d %T" | tr ':' '.')" -${{ github.run_number }} >> $GITHUB_ENV
+      
     - name: ZAP Scan
       id: scan
       uses: zaproxy/action-full-scan@v0.8.0
       with:
         target: 'http://127.0.0.1:3000/'
-        artifact_name: "test-name"
-        
-    - name: create file
-      run: |
-        echo "hello world" > "texto.txt"    
-
-    - name: Archive artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: texto
-        path: './texto.txt'
+        artifact_name: ${{ env.ZAP_NAME }} 
+      
 
   job1:
     runs-on: ubuntu-latest
