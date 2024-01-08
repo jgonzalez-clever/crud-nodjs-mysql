@@ -27,7 +27,7 @@ jobs:
 
     - name: Zap-name
       run: |
-        echo "ZAP_NAME=$(date +"%Y-%m-%d %T" | tr ':' '.')" -${{ github.run_number }} >> $GITHUB_ENV
+        echo "ZAP_NAME= ZAP_SCAN $(date +"%Y-%m-%d %T" | tr ':' '.') - #${{ github.run_number }}"  >> $GITHUB_ENV
       
     - name: ZAP Scan
       id: scan
