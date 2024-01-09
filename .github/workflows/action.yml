@@ -57,7 +57,12 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        continue-on-error: true
+        #continue-on-error: true
+      
+      - name: Deploy to Production
+        if: ${{ failure() }}
+        run: |
+          echo 'something is wrong'
 
 
   job1:
