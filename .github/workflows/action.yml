@@ -10,6 +10,9 @@ on:
 jobs:
   zap-scan:
     runs-on: ubuntu-latest
+    environment: 
+      name: Test
+      url: 'http://www.myapp.com'
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -35,6 +38,7 @@ jobs:
       with:
         target: 'http://127.0.0.1:3000/'
         artifact_name: ${{ env.ZAP_NAME }} 
+
 
   linter:
     runs-on: ubuntu-latest
