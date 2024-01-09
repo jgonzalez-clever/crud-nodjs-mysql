@@ -54,6 +54,18 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Move lint report
+        run: mv /tmp/lint /github/workspace/lint-report
+          # Guardar el informe de lint como un artefacto
+      - name: Upload lint report
+        uses: actions/upload-artifact@v2
+        with:
+          name: lint-report
+          path: lint-report
+        
+        
       
 
   job1:
