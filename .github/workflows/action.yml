@@ -10,7 +10,6 @@ on:
 jobs:
   zap-scan:
     runs-on: ubuntu-latest
-    needs: linter
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
@@ -39,7 +38,7 @@ jobs:
 
   linter:
     runs-on: ubuntu-latest
-#    needs: zap-scan
+    needs: zap-scan
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -56,17 +55,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
-      - name: Move lint report
-        run: mv /tmp/lint /github/workspace/lint-report
-          # Guardar el informe de lint como un artefacto
-      - name: Upload lint report
-        uses: actions/upload-artifact@v2
-        with:
-          name: lint-report
-          path: lint-report
-        
-        
-      
 
   job1:
     runs-on: ubuntu-latest
