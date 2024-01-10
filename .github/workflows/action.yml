@@ -59,7 +59,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         #continue-on-error: true
       
-      - name: Deploy to Production
+      - name: Test failure
         if: ${{ failure() }}
         run: |
           echo 'something is wrong'
