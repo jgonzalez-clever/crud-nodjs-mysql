@@ -11,8 +11,8 @@ runs:
     - name: Diagnóstico de red podman
       shell: bash
       run: |
-        podman run --rm -it \
-          --network=host \  
+        podman run --rm \
+          --network=host \
           docker.io/library/bash:latest \
           bash -c '
             echo "== HOSTNAME =="
