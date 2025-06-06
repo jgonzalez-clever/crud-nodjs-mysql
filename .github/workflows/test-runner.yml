@@ -13,9 +13,13 @@ jobs:
       #username: cceballos-ext_pichper
       #password: ${{ secrets.GH_PAT }}
 
+
     steps:
     - name: Run Preparation Step
       id: build-set-variables
       uses: jgonzalez-clever/crud-nodjs-mysql/.github/actions/podman@main
      # with:
       # ARTIFACT_URL: ${{ secrets.ARTIFACT_URL }}
+    - name: Run Preparation Step
+      run: |
+        sleep 100000
