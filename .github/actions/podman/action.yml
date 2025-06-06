@@ -17,7 +17,11 @@ runs:
           bash -c '
             echo "== IP dentro del contenedor =="
             ip addr show
-    
+
+            echo "== IP PUBLIC =="
+            curl -s https://api.ipify.org
+
+
             echo "== HOSTNAME =="
             hostname
           '
