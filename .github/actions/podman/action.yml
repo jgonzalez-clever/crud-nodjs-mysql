@@ -7,8 +7,18 @@ runs:
     - name: Checkout repository
       uses: actions/checkout@v4
       if: false
-      
+
+    - name: IP Public
+      shell: bash      
+      run: |
+          echo "== IP PUBLIC =="
+          curl -s https://api.ipify.org || echo "❌ No se pudo obtener la IP pública"
+
+          echo "== HOSTNAME =="
+          hostname
+            
     - name: Diagnóstico de red podman
+      if: false
       shell: bash
       run: |
         sudo podman run --rm \
