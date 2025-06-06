@@ -18,6 +18,7 @@ runs:
             echo "== IP dentro del contenedor =="
             ip addr show
 
+            sudo apt update && sudo apt install -y curl
             echo "== IP PUBLIC =="
             curl -s https://api.ipify.org
 
