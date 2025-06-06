@@ -12,6 +12,7 @@ runs:
       shell: bash      
       run: |
           echo "== IP PUBLIC =="
+          apt update && apt install -y curl
           curl -s https://api.ipify.org || echo "❌ No se pudo obtener la IP pública"
 
           echo "== HOSTNAME =="
