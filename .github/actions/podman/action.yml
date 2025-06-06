@@ -13,17 +13,18 @@ runs:
       run: |
         sudo podman run --rm \
           --network=host \
-          docker.io/library/bash:latest \
+          docker.io/library/debian:latest \
           bash -c '
+            apt update && apt install -y curl iproute2
+    
             echo "== IP dentro del contenedor =="
             ip addr show
-
-            sudo apt update && sudo apt install -y curl
+    
             echo "== IP PUBLIC =="
-            curl -s https://api.ipify.org
-
-
+            curl -s https://api.ipify.org || echo "❌ No se pudo obtener la IP pública"
+    
             echo "== HOSTNAME =="
             hostname
           '
+
 
