@@ -19,5 +19,6 @@ runs:
             hostname
         
             echo "== INTENTO CON CURL =="
-            curl -v --max-time 5 --max-redirs 5 http://artifactoryci.pichincha.pe:8080/ || echo "❌ CURL falló"
+            curl -v google.com
+            #curl -v --max-time 5 --max-redirs 5 http://artifactoryci.pichincha.pe:8080/ || echo "❌ CURL falló"
           '
