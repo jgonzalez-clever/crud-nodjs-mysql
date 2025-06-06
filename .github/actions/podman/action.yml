@@ -7,7 +7,7 @@ runs:
     - name: Checkout repository
       uses: actions/checkout@v4
       if: false
-
+      
     - name: Diagnóstico de red podman
       shell: bash
       run: |
@@ -15,10 +15,10 @@ runs:
           --network=host \
           docker.io/library/bash:latest \
           bash -c '
+            echo "== IP dentro del contenedor =="
+            ip addr show
+    
             echo "== HOSTNAME =="
             hostname
-        
-            echo "== INTENTO CON CURL =="
-            curl -v google.com
-            #curl -v --max-time 5 --max-redirs 5 http://artifactoryci.pichincha.pe:8080/ || echo "❌ CURL falló"
           '
+
