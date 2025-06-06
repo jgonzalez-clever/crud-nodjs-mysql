@@ -1,0 +1,23 @@
+name: 'Build and Publish Artifact'
+description: 'Builds and publishes a Maven artifact'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      if: false
+
+    - name: Diagnóstico de red podman
+      shell: bash
+      run: |
+        podman run --rm -it \
+          --network=host \  
+          docker.io/library/bash:latest \
+          bash -c '
+            echo "== HOSTNAME =="
+            hostname
+        
+            echo "== INTENTO CON CURL =="
+            curl -v --max-time 5 --max-redirs 5 http://artifactoryci.pichincha.pe:8080/ || echo "❌ CURL falló"
+          '
