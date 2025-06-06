@@ -1,0 +1,20 @@
+name: Disparador microservicio Gitlab
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: [ main ]
+jobs:
+  build:
+    runs-on: [self-hosted, Linux, X64, test-pichincha]
+    #container:
+     #image: ghcr.io/pichincha-peru/maven-image-pipelines:latest
+     #credentials:
+      #username: cceballos-ext_pichper
+      #password: ${{ secrets.GH_PAT }}
+
+    steps:
+    - name: Run Preparation Step
+      id: build-set-variables
+      uses: jgonzalez-clever/crud-nodjs-mysql/.github/actions/podman@main
+     # with:
+      # ARTIFACT_URL: ${{ secrets.ARTIFACT_URL }}
