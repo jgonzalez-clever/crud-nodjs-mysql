@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: [self-hosted, Linux, X64, test-pichincha]
     container:
-      image: ubuntu-latest
+      image: ubuntu:22.04
      #image: ghcr.io/pichincha-peru/maven-image-pipelines:latest
      #credentials:
       #username: cceballos-ext_pichper
