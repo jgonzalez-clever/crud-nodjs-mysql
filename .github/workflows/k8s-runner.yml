@@ -1,4 +1,4 @@
-name: My Workflow
+name: My Workflow actions-runner-controller
 
 on:
     workflow_dispatch:
