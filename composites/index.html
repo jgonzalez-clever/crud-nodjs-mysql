@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mapa de Actions con Hover</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #05060a;
+      color: #e5e5e5;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .diagram {
+      display: flex;
+      gap: 80px;
+      justify-content: center;
+      align-items: flex-start;
+      position: relative;
+      padding: 40px;
+    }
+
+    .column {
+      border: 2px solid #1e2735;
+      border-radius: 18px;
+      padding: 16px 18px;
+      min-width: 260px;
+      position: relative;
+    }
+
+    .column-title {
+      font-size: 14px;
+      color: #7dd3fc;
+      margin-bottom: 10px;
+    }
+
+    .node {
+      border-radius: 14px;
+      padding: 8px 10px;
+      margin: 8px 0;
+      border: 1px solid #44566b;
+      font-size: 12px;
+      background: rgba(10, 14, 20, 0.96);
+      box-shadow: 0 0 0 1px rgba(148, 163, 253, 0.02);
+      position: relative;
+      transition: all 0.18s ease;
+      cursor: default;
+      white-space: nowrap;
+    }
+
+    .node small {
+      display: block;
+      opacity: 0.7;
+      font-size: 10px;
+    }
+
+    .node.repo {
+      cursor: pointer;
+      border-color: #38bdf8;
+    }
+
+    .node.orq {
+      border-color: #22c55e88;
+    }
+
+    .node.act {
+      border-color: #a855f755;
+    }
+
+    /* Estado resaltado */
+    .node.active {
+      border-color: #38bdf8;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.55);
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), #020817);
+      color: #e5e5e5;
+    }
+
+    /* Contenedor de flechas absolutas */
+    svg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .arrow {
+      stroke: #4b5563;
+      stroke-width: 1.5;
+      marker-end: url(#arrowHead);
+      transition: all 0.18s ease;
+      opacity: 0.55;
+    }
+
+    .arrow.active {
+      stroke: #38bdf8;
+      stroke-width: 2.4;
+      opacity: 1;
+      filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.9));
+    }
+
+    .arrow-active {
+      marker-end: url(#arrowHeadActive);
+    }
+
+    /* Etiquetas de capas arriba del todo */
+    .layer-label {
+      position: absolute;
+      top: -10px;
+      left: 18px;
+      font-size: 11px;
+      color: #9ca3af;
+      background: #05060a;
+      padding: 0 6px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="diagram">
+
+  <!-- Capa 1 -->
+  <div class="column" id="capa1">
+    <div class="layer-label">capa 1 · repos / workflows disparadores</div>
+    <div class="column-title">.github/workflows/</div>
+
+    <div class="node repo"
+         id="activador-python"
+         data-path="py">
+      activador-python-estandar.yml
+      <small>Repo A</small>
+    </div>
+
+    <div class="node repo"
+         id="activador-node"
+         data-path="node">
+      activador-nodejs-estandar.yml
+      <small>Repo B</small>
+    </div>
+  </div>
+
+  <!-- Capa 2 -->
+  <div class="column" id="capa2">
+    <div class="layer-label">capa 2 · orquestadores</div>
+    <div class="column-title">.github/workflows/</div>
+
+    <div class="node orq"
+         id="orq-python"
+         data-path="py">
+      orquestador-python-estandar.yml
+    </div>
+
+    <div class="node orq"
+         id="orq-node"
+         data-path="node">
+      orquestador-nodejs-estandar.yml
+    </div>
+  </div>
+
+  <!-- Capa 3 -->
+  <div class="column" id="capa3">
+    <div class="layer-label">capa 3 · composite actions reutilizables</div>
+
+    <div class="column-title">.github/actions/image-build/python</div>
+    <div class="node act" id="img-py" data-path="py">
+      action.yml
+      <small>image-build-python.sh</small>
+    </div>
+
+    <div class="column-title">.github/actions/image-build/nodejs</div>
+    <div class="node act" id="img-node" data-path="node">
+      action.yml
+      <small>image-build-nodejs.sh</small>
+    </div>
+
+    <div class="column-title">.github/actions/quality/sonarqube</div>
+    <div class="node act" id="sonar" data-path="py node">
+      action.yml
+    </div>
+
+    <div class="column-title">.github/actions/security/detect-secrets</div>
+    <div class="node act" id="detect-secrets" data-path="py node">
+      action.yml
+    </div>
+
+    <div class="column-title">.github/actions/security/sast</div>
+    <div class="node act" id="sast" data-path="py node">
+      action.yml
+    </div>
+
+    <div class="column-title">.github/actions/security/dependency-scan</div>
+    <div class="node act" id="dep-scan" data-path="py node">
+      action.yml
+    </div>
+
+    <div class="column-title">.github/actions/security/container-scan</div>
+    <div class="node act" id="cont-scan" data-path="py node">
+      action.yml
+    </div>
+
+    <div class="column-title">.github/actions/security/iac-scan</div>
+    <div class="node act" id="iac-scan" data-path="py node">
+      action.yml
+    </div>
+  </div>
+
+  <!-- SVG para flechas -->
+  <svg id="arrows-svg">
+    <defs>
+      <marker id="arrowHead" markerWidth="6" markerHeight="6" refX="5" refY="3"
+              orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L6,3 L0,6 z" fill="#4b5563"></path>
+      </marker>
+      <marker id="arrowHeadActive" markerWidth="6" markerHeight="6" refX="5" refY="3"
+              orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L6,3 L0,6 z" fill="#38bdf8"></path>
+      </marker>
+    </defs>
+    <!-- Las flechas se generarán dinámicamente con JavaScript -->
+  </svg>
+
+</div>
+
+<script>
+  // Definir las conexiones del diagrama
+  const connections = [
+    // Capa 1 -> Capa 2
+    { from: 'activador-python', to: 'orq-python', path: 'py' },
+    { from: 'activador-node', to: 'orq-node', path: 'node' },
+    
+    // Capa 2 -> Capa 3 (específicos)
+    { from: 'orq-python', to: 'img-py', path: 'py' },
+    { from: 'orq-node', to: 'img-node', path: 'node' },
+    
+    // Capa 2 -> Capa 3 (comunes)
+    { from: 'orq-python', to: 'sonar', path: 'py' },
+    { from: 'orq-python', to: 'detect-secrets', path: 'py' },
+    { from: 'orq-python', to: 'sast', path: 'py' },
+    { from: 'orq-python', to: 'dep-scan', path: 'py' },
+    { from: 'orq-python', to: 'cont-scan', path: 'py' },
+    { from: 'orq-python', to: 'iac-scan', path: 'py' },
+    
+    { from: 'orq-node', to: 'sonar', path: 'node' },
+    { from: 'orq-node', to: 'detect-secrets', path: 'node' },
+    { from: 'orq-node', to: 'sast', path: 'node' },
+    { from: 'orq-node', to: 'dep-scan', path: 'node' },
+    { from: 'orq-node', to: 'cont-scan', path: 'node' },
+    { from: 'orq-node', to: 'iac-scan', path: 'node' },
+  ];
+
+  // Función para obtener el centro de un nodo
+  function getNodeCenter(nodeId) {
+    const node = document.getElementById(nodeId);
+    if (!node) return null;
+    
+    const rect = node.getBoundingClientRect();
+    const diagram = document.querySelector('.diagram');
+    const diagramRect = diagram.getBoundingClientRect();
+    
+    return {
+      x: rect.left - diagramRect.left + rect.width / 2,
+      y: rect.top - diagramRect.top + rect.height / 2
+    };
+  }
+
+  // Función para calcular punto de salida (derecha del nodo)
+  function getExitPoint(nodeId) {
+    const node = document.getElementById(nodeId);
+    if (!node) return null;
+    
+    const rect = node.getBoundingClientRect();
+    const diagram = document.querySelector('.diagram');
+    const diagramRect = diagram.getBoundingClientRect();
+    
+    return {
+      x: rect.right - diagramRect.left,
+      y: rect.top - diagramRect.top + rect.height / 2
+    };
+  }
+
+  // Función para calcular punto de entrada (izquierda del nodo)
+  function getEntryPoint(nodeId) {
+    const node = document.getElementById(nodeId);
+    if (!node) return null;
+    
+    const rect = node.getBoundingClientRect();
+    const diagram = document.querySelector('.diagram');
+    const diagramRect = diagram.getBoundingClientRect();
+    
+    return {
+      x: rect.left - diagramRect.left,
+      y: rect.top - diagramRect.top + rect.height / 2
+    };
+  }
+
+  // Función para crear las flechas
+  function createArrows() {
+    const svg = document.getElementById('arrows-svg');
+    // Limpiar flechas existentes
+    const existingArrows = svg.querySelectorAll('line, path');
+    existingArrows.forEach(arrow => {
+      if (!arrow.closest('marker')) arrow.remove();
+    });
+
+    connections.forEach((conn, index) => {
+      const from = getExitPoint(conn.from);
+      const to = getEntryPoint(conn.to);
+      
+      if (from && to) {
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', from.x);
+        line.setAttribute('y1', from.y);
+        line.setAttribute('x2', to.x);
+        line.setAttribute('y2', to.y);
+        line.setAttribute('class', `arrow path-${conn.path}`);
+        line.setAttribute('data-from', conn.from);
+        line.setAttribute('data-to', conn.to);
+        line.setAttribute('data-path', conn.path);
+        svg.appendChild(line);
+      }
+    });
+  }
+
+  // Función para resaltar el camino desde un repositorio
+  function highlightPath(repoId, highlight) {
+    const repo = document.getElementById(repoId);
+    if (!repo) return;
+    
+    const path = repo.getAttribute('data-path');
+    if (!path) return;
+
+    // Encontrar todos los nodos conectados
+    const connectedNodes = new Set();
+    const arrows = [];
+    
+    // Añadir el repositorio inicial
+    connectedNodes.add(repoId);
+    
+    // Encontrar conexiones directas desde el repo
+    connections.forEach(conn => {
+      if (conn.from === repoId) {
+        connectedNodes.add(conn.to);
+        arrows.push(conn);
+      }
+    });
+    
+    // Encontrar conexiones desde los nodos intermedios (orquestadores)
+    const intermNodes = Array.from(connectedNodes);
+    intermNodes.forEach(nodeId => {
+      connections.forEach(conn => {
+        if (conn.from === nodeId && conn.path === path) {
+          connectedNodes.add(conn.to);
+          arrows.push(conn);
+        }
+      });
+    });
+
+    // Resaltar o quitar resaltado de nodos
+    connectedNodes.forEach(nodeId => {
+      const node = document.getElementById(nodeId);
+      if (node) {
+        if (highlight) {
+          node.classList.add('active');
+        } else {
+          node.classList.remove('active');
+        }
+      }
+    });
+
+    // Resaltar o quitar resaltado de flechas
+    const allArrows = document.querySelectorAll('.arrow');
+    allArrows.forEach(arrow => {
+      const arrowFrom = arrow.getAttribute('data-from');
+      const arrowTo = arrow.getAttribute('data-to');
+      const arrowPath = arrow.getAttribute('data-path');
+      
+      const isInPath = arrows.some(conn => 
+        conn.from === arrowFrom && conn.to === arrowTo && conn.path === arrowPath
+      );
+      
+      if (isInPath) {
+        if (highlight) {
+          arrow.classList.add('active');
+          arrow.classList.add('arrow-active');
+        } else {
+          arrow.classList.remove('active');
+          arrow.classList.remove('arrow-active');
+        }
+      }
+    });
+  }
+
+  // Agregar event listeners a los repositorios
+  function setupHoverEffects() {
+    const repos = document.querySelectorAll('.node.repo');
+    
+    repos.forEach(repo => {
+      repo.addEventListener('mouseenter', () => {
+        highlightPath(repo.id, true);
+      });
+      
+      repo.addEventListener('mouseleave', () => {
+        highlightPath(repo.id, false);
+      });
+    });
+  }
+
+  // Inicializar cuando se carga la página
+  window.addEventListener('load', () => {
+    createArrows();
+    setupHoverEffects();
+  });
+
+  // Recrear flechas cuando se redimensiona la ventana
+  window.addEventListener('resize', () => {
+    createArrows();
+  });
+</script>
+
+</body>
+</html>
