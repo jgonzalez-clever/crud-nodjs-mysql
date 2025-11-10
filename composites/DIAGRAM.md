@@ -4,20 +4,8 @@
 
 <div align="center">
 
-### 🔗 [Abrir Diagrama en Pantalla Completa](./index.html)
-
-</div>
-
-<!-- Para visualizadores Markdown que soportan HTML -->
-<div style="width: 100%; height: 800px; border: 1px solid #1e2735; border-radius: 8px; overflow: hidden; margin: 20px 0;">
-  <iframe 
-    src="./index.html" 
-    width="100%" 
-    height="100%" 
-    frameborder="0"
-    style="border: none;">
-  </iframe>
-</div>
+[![Pipeline Diagram](./diagram-preview.png)](./index.html)
+*Click en la imagen para ver el diagrama interactivo*
 
 ---
 
