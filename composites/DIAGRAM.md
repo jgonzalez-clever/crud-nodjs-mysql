@@ -4,7 +4,7 @@
 
 <div align="center">
 
-[![Pipeline Diagram](./diagram-preview.png)](./index.html)
+[[Pipeline Diagram](./diagram-preview.png)](./index.html)
 *Click en la imagen para ver el diagrama interactivo*
 
 ---
