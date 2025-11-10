@@ -4,8 +4,37 @@
 
 <div align="center">
 
-[[Pipeline Diagram](./diagram-preview.png)](./index.html)
-*Click en la imagen para ver el diagrama interactivo*
+---
+
+## 🚀 [**CLICK AQUÍ PARA VER EL DIAGRAMA INTERACTIVO** →](./index.html)
+
+**O abre el archivo:** [`index.html`](./index.html)
+
+---
+
+> ⚠️ **Nota**: Si estás viendo esto en GitHub, el iframe a continuación no se mostrará por razones de seguridad.  
+> **Haz click en el enlace de arriba** para ver el diagrama interactivo completo.
+
+</div>
+
+<!-- Para visualizadores Markdown que soportan HTML -->
+<div style="width: 100%; height: 800px; border: 1px solid #1e2735; border-radius: 8px; overflow: hidden; margin: 20px 0;">
+  <iframe 
+    src="./index.html" 
+    width="100%" 
+    height="100%" 
+    frameborder="0"
+    style="border: none;">
+  </iframe>
+</div>
+
+<div align="center">
+
+### 👆 ¿No ves el diagrama arriba?
+
+**[Abre index.html en una nueva pestaña →](./index.html)**
+
+</div>
 
 ---
 
