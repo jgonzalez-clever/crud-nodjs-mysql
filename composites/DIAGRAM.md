@@ -113,7 +113,7 @@ Esta arquitectura implementa un **patrón de pipeline estandarizado** para GitHu
 **Propósito**: **Bloques de construcción modulares** que encapsulan tareas específicas y pueden ser reutilizados por cualquier orquestador.
 
 **Características**:
-- ✅ **Modulares**: Cada action hace una cosa y la hace bien
+- ✅ **Modulares**: Cada action hace una cosa
 - ✅ **Reutilizables**: Compartidos entre Python, Node.js, Java, etc.
 - ✅ **Parametrizables**: Inputs/outputs bien definidos
 - ✅ **Versionables**: Pueden tener diferentes versiones (v1, v2)
